@@ -3,7 +3,8 @@ type addMaxValueACType = ReturnType<typeof addMaxValueAC>
 type addMinValueACType = ReturnType<typeof addMinValueAC>
 type enterValueAlertACType = ReturnType<typeof enterValueAlertAC>
 type resetCountACType = ReturnType<typeof resetSetCountAC>
-
+type setValueFromLocalStorageACType = ReturnType<typeof setValueFromLocalStorageAC>
+type setCountHowMinValueACType = ReturnType<typeof setCountHowMinValueAC>
 
 export type AllACType =
     addCountACType
@@ -11,6 +12,8 @@ export type AllACType =
     | addMinValueACType
     | enterValueAlertACType
     | resetCountACType
+    | setValueFromLocalStorageACType
+    | setCountHowMinValueACType
 
 
 export type CounterReducerStateType = {
@@ -43,6 +46,12 @@ export function CounterReducer(state: CounterReducerStateType = initialState, ac
         case "RESET-SET-COUNT": {
             return {...state, count: state.minValue}
         }
+        case "SET-VALUE-LOCAL-STORAGE": {
+            return {...state, maxValue: +action.maxValue, minValue: +action.minValue}
+        }
+        case "SET-COUNT-HOW-MIN-VALUE":{
+            return {...state,count:+action.minValue}
+        }
 
         default :
             return state
@@ -63,5 +72,11 @@ export const enterValueAlertAC = (status: boolean) => {
 }
 export const resetSetCountAC = () => {
     return {type: 'RESET-SET-COUNT'} as const
+}
+export const setValueFromLocalStorageAC = (maxValue: string, minValue: string) => {
+    return {type: 'SET-VALUE-LOCAL-STORAGE', maxValue, minValue} as const
+}
+export const setCountHowMinValueAC = (minValue: string) => {
+    return {type: 'SET-COUNT-HOW-MIN-VALUE', minValue} as const
 }
 

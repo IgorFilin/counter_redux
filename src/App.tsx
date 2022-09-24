@@ -1,15 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Counter} from "./Counter/Counter";
 import {SettingsBlock} from "./SettingsBlock/SettingsBlock";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {StateAppType} from "./redux/store";
-import {CounterReducerStateType,} from "./redux/CounterReducer";
+import {CounterReducerStateType, setCountHowMinValueAC, setValueFromLocalStorageAC,} from "./redux/CounterReducer";
 
 
 function App() {
-    console.log('render App')
     const state = useSelector<StateAppType, CounterReducerStateType>(state => state.counter)
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+        let maxValue = JSON.parse(localStorage.getItem('counterMaxValue')!)
+        let minValue = JSON.parse(localStorage.getItem('counterMinValue')!)
+        dispatch(setCountHowMinValueAC(minValue))
+        dispatch(setValueFromLocalStorageAC(maxValue,minValue))
+    },[])
 
     const {count, maxValue, minValue, enterValueAlert} = state
 
