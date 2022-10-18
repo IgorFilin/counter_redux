@@ -11,12 +11,20 @@ function App() {
     const state = useSelector<StateAppType, CounterReducerStateType>(state => state.counter)
     const dispatch = useDispatch()
 
-    useEffect(()=>{
-        let maxValue = JSON.parse(localStorage.getItem('counterMaxValue')!)
-        let minValue = JSON.parse(localStorage.getItem('counterMinValue')!)
+    useEffect(() => {
+        let maxValue;
+        let minValue;
+        if (localStorage.getItem('counterMaxValue') || localStorage.getItem('counterMinValue')) {
+            maxValue = JSON.parse(localStorage.getItem('counterMaxValue')!)
+            minValue = JSON.parse(localStorage.getItem('counterMinValue')!)
+        } else {
+            maxValue = state.maxValue
+            minValue = state.minValue
+        }
+
         dispatch(setCountHowMinValueAC(minValue))
-        dispatch(setValueFromLocalStorageAC(maxValue,minValue))
-    },[])
+        dispatch(setValueFromLocalStorageAC(maxValue, minValue))
+    }, [])
 
     const {count, maxValue, minValue, enterValueAlert} = state
 
@@ -24,6 +32,7 @@ function App() {
 
     return (
         <div className="App">
+            <div className='contentMainBlock'>
             <SettingsBlock
                 inputNumberError={inputNumberError}
                 enterValueAlert={enterValueAlert}
@@ -37,6 +46,7 @@ function App() {
                 isMaxValueError={count === maxValue}
                 isMinValueError={count === minValue}
             />
+            </div>
         </div>
     );
 }

@@ -4,9 +4,19 @@ body {
 
 .App {
     height: 100vh;
+}
+
+.contentMainBlock {
     display: flex;
     flex-wrap: wrap-reverse;
     justify-content: center;
     flex-direction: row;
     align-items: center;
+}
+@media screen and (min-width: 500px){
+    .App{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
